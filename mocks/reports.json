@@ -1,0 +1,34 @@
+{
+  "body": [
+    {
+      "id": 1,
+      "name": "Alberto Martinez",
+      "location": {
+        "lat": 27.92,
+        "lng": -101.20
+      }
+    },
+    {
+      "id": 2,
+      "name": "Alberto Martinez",
+      "location": {
+        "lat": 25.92,
+        "lng": -101.20
+      }
+    }
+  ],
+  "bully_types": [
+    {
+      "type": "Miradas Lacivas",
+      "image": "/assets/png/eyes.png"
+    },
+    {
+      "type": "Tocamientos",
+      "image": "/assets/png/hand.png"
+    },
+    {
+      "type": "Chiflidos",
+      "image": "/assets/png/mouth.png"
+    }
+  ]
+}
