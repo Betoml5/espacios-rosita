@@ -29,7 +29,7 @@ const Report = ({ bullyTypes }) => {
             <input
               onChange={onChange}
               type="number"
-              name="edad"
+              name="age"
               placeholder="Edad"
               className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
@@ -90,25 +90,61 @@ const Report = ({ bullyTypes }) => {
             />
           </div>
         )}
+        {step === 4 && (
+          <div>
+            <h4 className="text-xl mb-4">Informacion extra</h4>
+            <textarea
+              onChange={onChange}
+              name="information"
+              placeholder="Informacion extra"
+              className="px-3 py-3 h-24 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
+            ></textarea>
+          </div>
+        )}
+
+        {step === 5 && (
+          <>
+            <h4 className="text-xl mb-4">Resumen de datos</h4>
+            <div className="border border-black p-4 rounded-xl ">
+              <p>Nombre: {userData.name}</p>
+              <p>Edad: {userData.age}</p>
+              <p>Calle: {userData.street}</p>
+              <p>Colonia: {userData.neighborhood}</p>
+              <p></p>
+            </div>
+          </>
+        )}
       </section>
 
       <section className="flex justify-between">
-        <button
-          onClick={() => {
-            setStep(step + 1);
-            console.log(userData);
-          }}
-          className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-        >
-          Siguiente paso
-        </button>
-        {step > 1 && (
+        {step === 5 && (
+          <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+            Enviar reporte
+          </button>
+        )}
+        {step < 5 && (
+          <button
+            onClick={() => {
+              setStep(step + 1);
+              console.log(userData);
+            }}
+            className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+          >
+            Siguiente paso
+          </button>
+        )}
+        {step > 1 && step < 6 && (
           <button
             onClick={() => setStep(step - 1)}
             className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
           >
             Volver
           </button>
+        )}
+        {step > 5 && (
+          <section className="self-center  justify-self-center">
+            Ups! Te perdiste
+          </section>
         )}
       </section>
     </div>
