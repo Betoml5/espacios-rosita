@@ -2,26 +2,37 @@ import useReport from "../hooks/useReport";
 import Image from "next/image";
 
 const Report = ({ bullyTypes }) => {
-  const { step, setStep } = useReport();
-  console.log(bullyTypes);
+  const { step, setStep, userData, setUserData } = useReport();
+
+  const onChange = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div className="p-4">
       <section className="my-9">
         {step === 1 && (
           <>
             <h4 className="text-xl mb-4">Datos personales</h4>
-            <div class="mb-3 pt-0">
+            <div className="mb-3 pt-0">
               <input
+                onChange={onChange}
                 type="text"
+                name="name"
                 placeholder="Nombre completo"
-                className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
+                className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
               />
             </div>
-            <div class="mb-3 pt-0">
+            <div className="mb-3 pt-0">
               <input
+                onChange={onChange}
                 type="number"
+                name="edad"
                 placeholder="Edad"
-                className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
+                className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
               />
             </div>
           </>
@@ -44,7 +55,10 @@ const Report = ({ bullyTypes }) => {
 
       <section className="flex justify-between">
         <button
-          onClick={() => setStep(step + 1)}
+          onClick={() => {
+            setStep(step + 1);
+            console.log(userData);
+          }}
           className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
         >
           Siguiente paso

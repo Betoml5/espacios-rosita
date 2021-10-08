@@ -11,6 +11,8 @@ export function ContextProvider({ children }) {
       value={{
         step,
         setStep,
+        userData,
+        setUserData,
       }}
     >
       {children}
