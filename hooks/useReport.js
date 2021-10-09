@@ -16,8 +16,11 @@ export default function useReport() {
   } = useContext(Context);
 
   const sendReport = async (report) => {
+    if (!report) return Promise.reject("Miss report");
     try {
+      setIsLoading(true);
       const response = await Axios.post(`${API}/report/create`, report);
+      setIsLoading(false);
       return response.data;
     } catch (error) {
       return error;
@@ -25,8 +28,11 @@ export default function useReport() {
   };
 
   const getReport = async (id) => {
+    if (!id) return Promise.reject("Need report id");
     try {
+      setIsLoading(true);
       const response = await Axios.get(`${API}/report/${id}`);
+      setIsLoading(false);
       return response.data;
     } catch (error) {
       return error;
@@ -35,7 +41,9 @@ export default function useReport() {
 
   const getReports = async () => {
     try {
+      setIsLoading(true);
       const response = await Axios.get(`${API}/report/all`);
+      setIsLoading(false);
       return response.data;
     } catch (error) {
       return error;
@@ -50,5 +58,9 @@ export default function useReport() {
     sendReport,
     getReport,
     getReports,
+    error,
+    setError,
+    isLoading,
+    setIsLoading,
   };
 }

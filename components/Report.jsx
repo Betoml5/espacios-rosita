@@ -2,7 +2,8 @@ import useReport from "../hooks/useReport";
 import Image from "next/image";
 
 const Report = ({ bullyTypes }) => {
-  const { step, setStep, userData, setUserData } = useReport();
+  const { step, setStep, userData, setUserData, error, isLoading, sendReport } =
+    useReport();
 
   const onChange = (e) => {
     setUserData({
@@ -24,7 +25,6 @@ const Report = ({ bullyTypes }) => {
               placeholder="Nombre completo"
               className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-
             <input
               onChange={onChange}
               type="number"
@@ -45,6 +45,8 @@ const Report = ({ bullyTypes }) => {
                     type="checkbox"
                     name={item.type}
                     id={item.type}
+                    data-val={true}
+                    value={true}
                     className="hidden"
                     onChange={onChange}
                   />
@@ -117,7 +119,10 @@ const Report = ({ bullyTypes }) => {
 
       <section className="flex justify-between">
         {step === 5 && (
-          <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+          <button
+            onClick={() => sendReport(userData)}
+            className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+          >
             Enviar reporte
           </button>
         )}
