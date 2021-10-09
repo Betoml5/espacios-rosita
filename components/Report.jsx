@@ -17,7 +17,6 @@ const Report = ({ bullyTypes }) => {
         {step === 1 && (
           <>
             <h4 className="text-xl mb-4">Datos personales</h4>
-
             <input
               onChange={onChange}
               type="text"

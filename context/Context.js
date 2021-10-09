@@ -3,6 +3,8 @@ import React, { useState } from "react";
 const Context = React.createContext({});
 
 export function ContextProvider({ children }) {
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [step, setStep] = useState(1);
   const [userData, setUserData] = useState({});
 
@@ -13,6 +15,10 @@ export function ContextProvider({ children }) {
         setStep,
         userData,
         setUserData,
+        error,
+        setError,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}
