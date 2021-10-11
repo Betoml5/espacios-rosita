@@ -1,15 +1,43 @@
 import useReport from "../hooks/useReport";
 import Image from "next/image";
+import useLocation from "../hooks/useLocation";
+import { useState } from "react";
 
 const Report = ({ bullyTypes }) => {
   const { step, setStep, userData, setUserData, error, isLoading, sendReport } =
     useReport();
+  const { getLocationByAddress } = useLocation();
+
+  const [bullyType, setBullyType] = useState({
+    MiradasLacivas: false,
+    Tocamientos: false,
+    Chiflidos: false,
+  });
+
+  const onClick = (e) => {
+    setBullyType({
+      ...bullyType,
+      [bullyType[e.target.name]]: !bullyType[e.target.name],
+    });
+    console.log(bullyType);
+  };
 
   const onChange = (e) => {
     setUserData({
       ...userData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const onSubmit = async (report) => {
+    try {
+      const address = `${report.street} ${report.neighborhood} ${report.city}`;
+      const location = await getLocationByAddress(address);
+      console.log(location[0]);
+      console.log(typeof report.Tocamientos);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -19,6 +47,7 @@ const Report = ({ bullyTypes }) => {
           <>
             <h4 className="text-xl mb-4">Datos personales</h4>
             <input
+              value={userData.name}
               onChange={onChange}
               type="text"
               name="name"
@@ -26,6 +55,7 @@ const Report = ({ bullyTypes }) => {
               className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
             <input
+              value={userData.age}
               onChange={onChange}
               type="number"
               name="age"
@@ -40,16 +70,13 @@ const Report = ({ bullyTypes }) => {
             <h4 className="text-xl mb-4">Tipos de acosos</h4>
             <div className="flex flex-wrap justify-around text-center">
               {bullyTypes.map((item) => (
-                <div className="flex flex-col items-center justify-center w-1/4  p-4 border border-black">
-                  <input
-                    type="checkbox"
-                    name={item.type}
-                    id={item.type}
-                    data-val={true}
-                    value={true}
-                    className="hidden"
-                    onChange={onChange}
-                  />
+                <div
+                  key={item.id}
+                  name={item.type}
+                  onChange={onChange}
+                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black`}
+                >
+                  <input type="checkbox" className="hidden" />
                   <label htmlFor={item.type}>
                     <p className="text-xs">{item.type}</p>
                     <Image
@@ -69,6 +96,7 @@ const Report = ({ bullyTypes }) => {
           <div>
             <h4 className="text-xl mb-4">Localizacion</h4>
             <input
+              value={userData.street}
               onChange={onChange}
               type="text"
               name="street"
@@ -76,6 +104,7 @@ const Report = ({ bullyTypes }) => {
               className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
             <input
+              value={userData.neighborhood}
               onChange={onChange}
               type="text"
               name="neighborhood"
@@ -83,6 +112,7 @@ const Report = ({ bullyTypes }) => {
               className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
             <input
+              value={userData.city}
               onChange={onChange}
               type="text"
               name="city"
@@ -95,6 +125,7 @@ const Report = ({ bullyTypes }) => {
           <div>
             <h4 className="text-xl mb-4">Informacion extra</h4>
             <textarea
+              value={userData.information}
               onChange={onChange}
               name="information"
               placeholder="Informacion extra"
@@ -107,7 +138,10 @@ const Report = ({ bullyTypes }) => {
           <>
             <h4 className="text-xl mb-4">Resumen de datos</h4>
             <div className="border border-black p-4 rounded-xl ">
-              <p>Nombre: {userData.name}</p>
+              <p>
+                Nombre: <br />
+                {userData.name}
+              </p>
               <p>Edad: {userData.age}</p>
               <p>Calle: {userData.street}</p>
               <p>Colonia: {userData.neighborhood}</p>
@@ -120,7 +154,7 @@ const Report = ({ bullyTypes }) => {
       <section className="flex justify-between">
         {step === 5 && (
           <button
-            onClick={() => sendReport(userData)}
+            onClick={() => onSubmit(userData)}
             className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
           >
             Enviar reporte

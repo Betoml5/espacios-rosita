@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Context from "../context/Context";
 import Axios from "axios";
-let API = process.env.NEXT_PUBLIC_API;
+const API = process.env.NEXT_PUBLIC_API;
 
 export default function useReport() {
   const {
