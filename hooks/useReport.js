@@ -21,8 +21,10 @@ export default function useReport() {
       setIsLoading(true);
       const response = await Axios.post(`${API}/report/create`, report);
       setIsLoading(false);
+      console.log(response);
       return response.data;
     } catch (error) {
+      console.log(error);
       return error;
     }
   };

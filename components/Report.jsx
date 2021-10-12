@@ -19,15 +19,31 @@ const Report = ({ bullyTypes }) => {
 
   const onSubmit = async (userData) => {
     try {
-      const address = `${report.street} ${report.neighborhood} ${report.city}`;
+      const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
       const location = await getLocationByAddress(address);
       const report = {
         name: userData.name,
         age: userData.age,
-        lat: location.lat,
-        lng: location.lon,
-        bullyTypes: []
-      }
+        lat: parseFloat(location[0].lat).toFixed(2),
+        lng: parseFloat(location[0].lon).toFixed(2),
+        information: userData.information,
+        bullyTypes: [
+          {
+            description: "Tocamientos",
+            value: userData["Tocamientos"],
+          },
+          {
+            description: "Miradas Lacivas",
+            value: userData["Miradas Lacivas"],
+          },
+          {
+            description: "Chiflidos",
+            value: userData["Chiflidos"],
+          },
+        ],
+      };
+
+      await sendReport(report);
     } catch (error) {
       console.log(error);
     }
