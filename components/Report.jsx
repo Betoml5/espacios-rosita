@@ -25,8 +25,10 @@ const Report = ({ bullyTypes }) => {
   const onChange = (e) => {
     setUserData({
       ...userData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
+    console.log(userData);
   };
 
   const onSubmit = async (report) => {
@@ -68,22 +70,28 @@ const Report = ({ bullyTypes }) => {
         {step === 2 && (
           <>
             <h4 className="text-xl mb-4">Tipos de acosos</h4>
-            <div className="flex flex-wrap justify-around text-center">
+            <div className="flex flex-wrap justify-between text-center">
               {bullyTypes.map((item) => (
                 <div
-                  key={item.id}
-                  name={item.type}
-                  onChange={onChange}
-                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black`}
+                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black ${
+                    item && "border-red-500"
+                  }`}
                 >
-                  <input type="checkbox" className="hidden" />
-                  <label htmlFor={item.type}>
+                  <label htmlFor={item.type} key={item.id}>
+                    <input
+                      type="checkbox"
+                      className="hidden"
+                      name={item.type}
+                      id={item.type}
+                      onClick={onChange}
+                    />
+
                     <p className="text-xs">{item.type}</p>
                     <Image
                       src={item.image}
                       alt="image"
-                      width={35}
-                      height={35}
+                      width={30}
+                      height={30}
                     />
                   </label>
                 </div>
