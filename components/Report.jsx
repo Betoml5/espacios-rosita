@@ -8,20 +8,6 @@ const Report = ({ bullyTypes }) => {
     useReport();
   const { getLocationByAddress } = useLocation();
 
-  const [bullyType, setBullyType] = useState({
-    MiradasLacivas: false,
-    Tocamientos: false,
-    Chiflidos: false,
-  });
-
-  const onClick = (e) => {
-    setBullyType({
-      ...bullyType,
-      [bullyType[e.target.name]]: !bullyType[e.target.name],
-    });
-    console.log(bullyType);
-  };
-
   const onChange = (e) => {
     setUserData({
       ...userData,
@@ -31,12 +17,17 @@ const Report = ({ bullyTypes }) => {
     console.log(userData);
   };
 
-  const onSubmit = async (report) => {
+  const onSubmit = async (userData) => {
     try {
       const address = `${report.street} ${report.neighborhood} ${report.city}`;
       const location = await getLocationByAddress(address);
-      console.log(location[0]);
-      console.log(typeof report.Tocamientos);
+      const report = {
+        name: userData.name,
+        age: userData.age,
+        lat: location.lat,
+        lng: location.lon,
+        bullyTypes: []
+      }
     } catch (error) {
       console.log(error);
     }
@@ -72,29 +63,24 @@ const Report = ({ bullyTypes }) => {
             <h4 className="text-xl mb-4">Tipos de acosos</h4>
             <div className="flex flex-wrap justify-between text-center">
               {bullyTypes.map((item) => (
-                <div
-                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black ${
-                    item && "border-red-500"
+                <label
+                  htmlFor={item.type}
+                  key={item.id}
+                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black rounded-lg cursor-pointer ${
+                    userData[item.type] && "border-2 border-green-500 "
                   }`}
                 >
-                  <label htmlFor={item.type} key={item.id}>
-                    <input
-                      type="checkbox"
-                      className="hidden"
-                      name={item.type}
-                      id={item.type}
-                      onClick={onChange}
-                    />
+                  <input
+                    type="checkbox"
+                    className="hidden"
+                    name={item.type}
+                    id={item.type}
+                    onClick={onChange}
+                  />
 
-                    <p className="text-xs">{item.type}</p>
-                    <Image
-                      src={item.image}
-                      alt="image"
-                      width={30}
-                      height={30}
-                    />
-                  </label>
-                </div>
+                  <p className="text-xs">{item.type}</p>
+                  <Image src={item.image} alt="image" width={30} height={30} />
+                </label>
               ))}
             </div>
           </>
@@ -153,7 +139,12 @@ const Report = ({ bullyTypes }) => {
               <p>Edad: {userData.age}</p>
               <p>Calle: {userData.street}</p>
               <p>Colonia: {userData.neighborhood}</p>
-              <p></p>
+              <p>Tocamientos: {userData.Tocamientos ? "Cierto" : "Falso"}</p>
+              <p>Chiflido: {userData.Chiflidos ? "Cierto" : "Falso"}</p>
+              <p>
+                Miradas Lacivas:{" "}
+                {userData["Miradas Lacivas"] ? "Cierto" : "Falso"}
+              </p>
             </div>
           </>
         )}
