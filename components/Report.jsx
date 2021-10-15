@@ -1,9 +1,11 @@
 import useReport from "../hooks/useReport";
 import Image from "next/image";
 import useLocation from "../hooks/useLocation";
-import { useState } from "react";
+import { bullyTypes } from "../mocks/reports";
+import { useRouter } from "next/dist/client/router";
 
-const Report = ({ bullyTypes }) => {
+const Report = () => {
+  const router = useRouter();
   const { step, setStep, userData, setUserData, error, isLoading, sendReport } =
     useReport();
   const { getLocationByAddress } = useLocation();
@@ -78,7 +80,7 @@ const Report = ({ bullyTypes }) => {
           <>
             <h4 className="text-xl mb-4">Tipos de acosos</h4>
             <div className="flex flex-wrap justify-between text-center">
-              {bullyTypes.map((item) => (
+              {bullyTypes.bully_types.map((item) => (
                 <label
                   htmlFor={item.type}
                   key={item.id}
@@ -166,7 +168,7 @@ const Report = ({ bullyTypes }) => {
         )}
       </section>
 
-      <section className="flex justify-between">
+      <section className="flex items-center justify-between flex-wrap">
         {step === 5 && (
           <button
             onClick={() => onSubmit(userData)}
@@ -194,6 +196,16 @@ const Report = ({ bullyTypes }) => {
             Volver
           </button>
         )}
+        <button
+          className="inline-flex text-white bg-red-500 border-0 py-2 px-6 my-2 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+          onClick={() => {
+            setUserData({});
+            router.push("/");
+            setStep(1);
+          }}
+        >
+          Cancelar reporte
+        </button>
         {step > 5 && (
           <section className="self-center  justify-self-center">
             Ups! Te perdiste

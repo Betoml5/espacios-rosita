@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { icon } from "leaflet";
 import { useEffect, useState } from "react";
-import MapPanel from "./MapPanel";
+
 
 const myIcon = icon({
   iconUrl: "/red-circle.png",
