@@ -2,11 +2,11 @@ import useReport from "../hooks/useReport";
 import Image from "next/image";
 import useLocation from "../hooks/useLocation";
 import { bullyTypes } from "../mocks/reports";
-import { useRouter } from "next/dist/client/router";
+// import { useRouter } from "next/dist/client/router";
 import { useRef, useState } from "react";
 
 const Report = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { step, setStep, userData, setUserData, error, isLoading, sendReport } =
     useReport();
   const [isValid, setIsValid] = useState(true);
@@ -98,9 +98,8 @@ const Report = () => {
                 <label
                   htmlFor={item.type}
                   key={item.id}
-                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black rounded-lg cursor-pointer ${
-                    userData[item.type] && "border-2 border-green-500 "
-                  }`}
+                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black rounded-lg cursor-pointer ${userData[item.type] && "border-2 border-green-500 "
+                    }`}
                 >
                   <input
                     type="checkbox"
@@ -164,9 +163,8 @@ const Report = () => {
           <>
             <h4 className="text-xl mb-4">Resumen de datos</h4>
             <div
-              className={`border border-black p-4 rounded-xl ${
-                !isValid && "border-red-600"
-              }`}
+              className={`border border-black p-4 rounded-xl ${!isValid && "border-red-600"
+                }`}
             >
               <p>
                 Nombre: <br />
@@ -225,7 +223,7 @@ const Report = () => {
           className="inline-flex text-white bg-red-500 border-0 py-2 px-6 my-2 focus:outline-none hover:bg-indigo-600 rounded text-lg"
           onClick={() => {
             setUserData({});
-            router.push("/");
+            // router.push("/");
             setStep(1);
           }}
         >
