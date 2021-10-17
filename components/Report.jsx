@@ -19,56 +19,46 @@ const Report = () => {
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
   };
-
   const form = useRef(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    Object.values(userData).forEach((input) => {
-      if (input == "") {
-        setIsValid(false);
-      }
-    });
-    console.log(Object.entries(userData).length);
-    console.log(isValid);
-
-    if (isValid) {
-      try {
-        const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
-        const location = await getLocationByAddress(address);
-        const report = {
-          name: userData.name,
-          age: userData.age,
-          lat: parseFloat(location[0].lat).toFixed(2),
-          lng: parseFloat(location[0].lon).toFixed(2),
-          information: userData.information,
-          bullyTypes: [
-            {
-              description: "Tocamientos",
-              value: userData["Tocamientos"],
-            },
-            {
-              description: "Miradas Lacivas",
-              value: userData["Miradas Lacivas"],
-            },
-            {
-              description: "Chiflidos",
-              value: userData["Chiflidos"],
-            },
-          ],
-        };
-        await sendReport(report);
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
+      const location = await getLocationByAddress(address);
+      const report = {
+        name: userData.name,
+        age: userData.age,
+        lat: parseFloat(location.data[0].latitude).toFixed(2),
+        lng: parseFloat(location.data[0].longitude).toFixed(2),
+        information: userData.information,
+        bullyTypes: [
+          {
+            description: "Tocamientos",
+            value: userData["Tocamientos"],
+          },
+          {
+            description: "Miradas Lacivas",
+            value: userData["Miradas Lacivas"],
+          },
+          {
+            description: "Chiflidos",
+            value: userData["Chiflidos"],
+          },
+        ],
+      };
+      // console.log(location.data[0].latitude)
+      await sendReport(report)
+    } catch (error) {
+      console.log(error);
     }
+
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 mx-auto max-w-lg">
       <form className="my-9" ref={form} onSubmit={handleSubmit}>
         {step === 1 && (
-          <>
+          <section>
             <h4 className="text-xl mb-4">Datos personales</h4>
             <input
               value={userData.name}
@@ -87,7 +77,7 @@ const Report = () => {
               placeholder="Edad"
               className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-          </>
+          </section>
         )}
 
         {step === 2 && (
@@ -163,7 +153,7 @@ const Report = () => {
           <>
             <h4 className="text-xl mb-4">Resumen de datos</h4>
             <div
-              className={`border border-black p-4 rounded-xl ${!isValid && "border-red-600"
+              className={`border border-black p-4 mb-4 rounded-xl ${!isValid && "border-red-600"
                 }`}
             >
               <p>
@@ -181,14 +171,14 @@ const Report = () => {
               </p>
             </div>
             {isValid === false && (
-              <span className="my-4">Todos los campos son obligatorios</span>
+              <span className="font-bold">Todos los campos son obligatorios</span>
             )}
             <br />
             {step === 5 && (
               <button
                 onSubmit={handleSubmit}
                 type="submit"
-                className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                className="inline-flex mt-4 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
               >
                 Enviar reporte
               </button>
@@ -223,7 +213,7 @@ const Report = () => {
           className="inline-flex text-white bg-red-500 border-0 py-2 px-6 my-2 focus:outline-none hover:bg-indigo-600 rounded text-lg"
           onClick={() => {
             setUserData({});
-            // router.push("/");
+            router.push("/");
             setStep(1);
           }}
         >

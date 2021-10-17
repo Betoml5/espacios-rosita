@@ -10,7 +10,7 @@ export default function useLocation() {
       setIsLoading(true);
       const response = await fetch(API + address + "&format=json");
       setIsLoading(false);
-      const location = response.json();
+      const location = await response.json();
       return location;
     } catch (error) {
       return error;
