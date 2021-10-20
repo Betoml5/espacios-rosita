@@ -7,8 +7,16 @@ import { useRef, useState } from "react";
 
 const Report = () => {
   const router = useRouter();
-  const { step, setStep, userData, setUserData, error, isLoading, sendReport, nextStep } =
-    useReport();
+  const {
+    step,
+    setStep,
+    userData,
+    setUserData,
+    error,
+    isLoading,
+    sendReport,
+    nextStep,
+  } = useReport();
   const [isValid, setIsValid] = useState(true);
   const { getLocationByAddress } = useLocation();
 
@@ -47,25 +55,17 @@ const Report = () => {
           },
         ],
       };
-      console.log(location)
-      await sendReport(report).then(res => console.log(res)).catch(e => console.log(e))
+      console.log(location);
+      await sendReport(report)
+        .then((res) => console.log(res))
+        .catch((e) => console.log(e));
       setStep(1);
       setUserData({});
-      router.push('/')
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
-
   };
-
-
-  const name = useRef(null).current;
-  const age = useRef(null).current;
-  const street = useRef(null).current;
-  const neighborhood = useRef(null).current
-  const city = useRef(null).current;
-
-
   return (
     <div className="p-4 mx-auto max-w-lg">
       <form className="my-9" ref={form} onSubmit={handleSubmit}>
@@ -89,9 +89,10 @@ const Report = () => {
               placeholder="Edad"
               className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-            {error && <span className="text-red-500">Estos campos son necesarios</span>}
+            {error && (
+              <span className="text-red-500">Estos campos son necesarios</span>
+            )}
           </section>
-
         )}
 
         {step === 2 && (
@@ -102,8 +103,9 @@ const Report = () => {
                 <label
                   htmlFor={item.type}
                   key={item.type}
-                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black rounded-lg cursor-pointer ${userData[item.type] && "border-2 border-green-500 "
-                    }`}
+                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black rounded-lg cursor-pointer ${
+                    userData[item.type] && "border-2 border-green-500 "
+                  }`}
                 >
                   <input
                     type="checkbox"
@@ -117,7 +119,9 @@ const Report = () => {
                   <Image src={item.image} alt="image" width={30} height={30} />
                 </label>
               ))}
-              {error && <span className="mt-4 text-red-500">Selecciona al menos 1</span>}
+              {error && (
+                <span className="mt-4 text-red-500">Selecciona al menos 1</span>
+              )}
             </div>
           </>
         )}
@@ -149,7 +153,9 @@ const Report = () => {
               placeholder="Ciudad"
               className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-            {error && <span className="text-red-500">Estos campos son necesarios</span>}
+            {error && (
+              <span className="text-red-500">Estos campos son necesarios</span>
+            )}
           </div>
         )}
         {step === 4 && (
@@ -169,32 +175,45 @@ const Report = () => {
           <>
             <h4 className="text-xl mb-4">Resumen de datos</h4>
             <div
-              className={`border border-black p-4 mb-4 rounded-xl ${!isValid && "border-red-600"
-                }`}
+              className={`border border-black p-4 mb-4 rounded-xl ${
+                !isValid && "border-red-600"
+              }`}
             >
               <p>
-                Nombre:{" "}
-                <b>{userData.name}</b>
+                Nombre: <b>{userData.name}</b>
               </p>
-              <p>Edad: <b>{userData.age}</b></p>
-              <p>Calle: <b>{userData.street}</b></p>
-              <p>Colonia: <b>{userData.neighborhood}</b></p>
-              <p>Tocamientos: <b>{userData.Tocamientos ? "Cierto" : "Falso"}</b></p>
-              <p>Chiflido: <b>{userData.Chiflidos ? "Cierto" : "Falso"}</b></p>
+              <p>
+                Edad: <b>{userData.age}</b>
+              </p>
+              <p>
+                Calle: <b>{userData.street}</b>
+              </p>
+              <p>
+                Colonia: <b>{userData.neighborhood}</b>
+              </p>
+              <p>
+                Tocamientos: <b>{userData.Tocamientos ? "Cierto" : "Falso"}</b>
+              </p>
+              <p>
+                Chiflido: <b>{userData.Chiflidos ? "Cierto" : "Falso"}</b>
+              </p>
               <p>
                 Miradas Lacivas:{" "}
                 <b>{userData["Miradas Lacivas"] ? "Cierto" : "Falso"}</b>
               </p>
             </div>
             <p className="italic">
-                La ubicacion mostrada en el mapa, es una ubicacion aproximada.
-                Este reporte no representa un reporte oficial para las autoridades.
-                Exhortamos a que se haga la denuncia con las autoridades correspondientes.
-
+              La ubicacion mostrada en el mapa, es una ubicacion aproximada.
+              Este reporte no representa un reporte oficial para las
+              autoridades. Exhortamos a que se haga la denuncia con las
+              autoridades correspondientes.
             </p>
             {isValid === false && (
-              <span className="font-bold">Todos los campos son obligatorios</span>
+              <span className="font-bold">
+                Todos los campos son obligatorios
+              </span>
             )}
+            {isLoading && <span className="my-4">Enviando reporte...</span>}
             <br />
             {step === 5 && (
               <button

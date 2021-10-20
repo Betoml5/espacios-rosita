@@ -19,7 +19,7 @@ import fetch from "node-fetch";
 //   }
 // };
 
-const Reporte = ({ data }) => {
+const Reporte = () => {
   return <Report />;
 };
 
