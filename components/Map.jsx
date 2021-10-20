@@ -15,11 +15,14 @@ const Map = () => {
   const [reports, setReports] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/body")
+    fetch("http://localhost:3013/api/report/all")
       .then((res) => res.json())
       .then((data) => setReports(data))
       .catch((e) => console.log(e));
   }, []);
+
+  // console.log(reports.body.map(i => console.log(i)))
+  console.log(reports.body)
 
   return (
     <div className="flex relative">
@@ -37,13 +40,12 @@ const Map = () => {
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
           url={urlMap}
         />
-        {reports.map((report) => (
-          <Marker position={report.location} icon={myIcon}>
+        {reports?.body?.map((report) => (
+          <Marker position={[report.lat, report.lng]} icon={myIcon} key={report._id}>
             <Popup>{report.name}</Popup>
           </Marker>
         ))}
       </MapContainer>
-      {/* <MapPanel /> */}
     </div>
   );
 };

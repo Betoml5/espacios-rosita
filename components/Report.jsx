@@ -2,12 +2,12 @@ import useReport from "../hooks/useReport";
 import Image from "next/image";
 import useLocation from "../hooks/useLocation";
 import { bullyTypes } from "../mocks/reports";
-// import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/dist/client/router";
 import { useRef, useState } from "react";
 
 const Report = () => {
-  // const router = useRouter();
-  const { step, setStep, userData, setUserData, error, isLoading, sendReport } =
+  const router = useRouter();
+  const { step, setStep, userData, setUserData, error, isLoading, sendReport, nextStep } =
     useReport();
   const [isValid, setIsValid] = useState(true);
   const { getLocationByAddress } = useLocation();
@@ -18,6 +18,7 @@ const Report = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
+    console.log(userData);
   };
   const form = useRef(null);
   const handleSubmit = async (e) => {
@@ -28,8 +29,8 @@ const Report = () => {
       const report = {
         name: userData.name,
         age: userData.age,
-        lat: parseFloat(location.data[0].latitude).toFixed(2),
-        lng: parseFloat(location.data[0].longitude).toFixed(2),
+        lat: parseFloat(location[0].lat).toFixed(2),
+        lng: parseFloat(location[0].lon).toFixed(2),
         information: userData.information,
         bullyTypes: [
           {
@@ -46,13 +47,24 @@ const Report = () => {
           },
         ],
       };
-      // console.log(location.data[0].latitude)
-      await sendReport(report)
+      console.log(location)
+      await sendReport(report).then(res => console.log(res)).catch(e => console.log(e))
+      setStep(1);
+      setUserData({});
+      router.push('/')
     } catch (error) {
       console.log(error);
     }
 
   };
+
+
+  const name = useRef(null).current;
+  const age = useRef(null).current;
+  const street = useRef(null).current;
+  const neighborhood = useRef(null).current
+  const city = useRef(null).current;
+
 
   return (
     <div className="p-4 mx-auto max-w-lg">
@@ -75,9 +87,11 @@ const Report = () => {
               type="number"
               name="age"
               placeholder="Edad"
-              className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
+              className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
+            {error && <span className="text-red-500">Estos campos son necesarios</span>}
           </section>
+
         )}
 
         {step === 2 && (
@@ -87,7 +101,7 @@ const Report = () => {
               {bullyTypes.bully_types.map((item) => (
                 <label
                   htmlFor={item.type}
-                  key={item.id}
+                  key={item.type}
                   className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black rounded-lg cursor-pointer ${userData[item.type] && "border-2 border-green-500 "
                     }`}
                 >
@@ -103,6 +117,7 @@ const Report = () => {
                   <Image src={item.image} alt="image" width={30} height={30} />
                 </label>
               ))}
+              {error && <span className="mt-4 text-red-500">Selecciona al menos 1</span>}
             </div>
           </>
         )}
@@ -132,8 +147,9 @@ const Report = () => {
               type="text"
               name="city"
               placeholder="Ciudad"
-              className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
+              className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
+            {error && <span className="text-red-500">Estos campos son necesarios</span>}
           </div>
         )}
         {step === 4 && (
@@ -143,7 +159,7 @@ const Report = () => {
               value={userData.information}
               onChange={onChange}
               name="information"
-              placeholder="Informacion extra"
+              placeholder="Hombre de 34 años, tez blanca, con gorra roja y pantalones oscuros"
               className="px-3 py-3 h-24 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             ></textarea>
           </div>
@@ -157,19 +173,25 @@ const Report = () => {
                 }`}
             >
               <p>
-                Nombre: <br />
-                {userData.name}
+                Nombre:{" "}
+                <b>{userData.name}</b>
               </p>
-              <p>Edad: {userData.age}</p>
-              <p>Calle: {userData.street}</p>
-              <p>Colonia: {userData.neighborhood}</p>
-              <p>Tocamientos: {userData.Tocamientos ? "Cierto" : "Falso"}</p>
-              <p>Chiflido: {userData.Chiflidos ? "Cierto" : "Falso"}</p>
+              <p>Edad: <b>{userData.age}</b></p>
+              <p>Calle: <b>{userData.street}</b></p>
+              <p>Colonia: <b>{userData.neighborhood}</b></p>
+              <p>Tocamientos: <b>{userData.Tocamientos ? "Cierto" : "Falso"}</b></p>
+              <p>Chiflido: <b>{userData.Chiflidos ? "Cierto" : "Falso"}</b></p>
               <p>
                 Miradas Lacivas:{" "}
-                {userData["Miradas Lacivas"] ? "Cierto" : "Falso"}
+                <b>{userData["Miradas Lacivas"] ? "Cierto" : "Falso"}</b>
               </p>
             </div>
+            <p className="italic">
+                La ubicacion mostrada en el mapa, es una ubicacion aproximada.
+                Este reporte no representa un reporte oficial para las autoridades.
+                Exhortamos a que se haga la denuncia con las autoridades correspondientes.
+
+            </p>
             {isValid === false && (
               <span className="font-bold">Todos los campos son obligatorios</span>
             )}
@@ -191,9 +213,7 @@ const Report = () => {
         {step < 5 && (
           <button
             type="button"
-            onClick={() => {
-              setStep(step + 1);
-            }}
+            onClick={nextStep}
             className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
           >
             Siguiente paso
@@ -210,7 +230,7 @@ const Report = () => {
         )}
         <button
           type="button"
-          className="inline-flex text-white bg-red-500 border-0 py-2 px-6 my-2 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+          className="inline-flex text-white bg-red-500 border-0 py-2 px-6 my-2 focus:outline-none hover:bg-red-400 rounded text-lg"
           onClick={() => {
             setUserData({});
             router.push("/");

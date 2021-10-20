@@ -19,7 +19,7 @@ export const bullyTypes = {
   ],
   bully_types: [
     {
-      type: "Miradas Lacivas",
+      type: "Chiflidos",
       image: "https://i.postimg.cc/LJXhHq3G/mouth.png",
     },
     {
@@ -27,7 +27,7 @@ export const bullyTypes = {
       image: "https://i.postimg.cc/zycv3Jdv/privacy.png",
     },
     {
-      type: "Chiflidos",
+      type: "Miradas Lacivas",
       image: "https://i.postimg.cc/kVR4bkZc/shared-vision.png",
     },
   ],

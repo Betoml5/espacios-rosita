@@ -15,6 +15,38 @@ export default function useReport() {
     setIsLoading,
   } = useContext(Context);
 
+  const nextStep = () => {
+    if (step === 1) {
+      if (userData.name == "" || userData.age == "") {
+        setError(true)
+      } else {
+        setStep(step + 1);
+        setError(false);
+      }
+    }
+    if (step === 2) {
+      if (userData["Tocamientos"] == false && userData["Chiflidos"] == false && userData["Miradas Lacivas"] == false) {
+        setError(true)
+      } else {
+        setStep(step + 1);
+        setError(false);
+      }
+    }
+
+    if (step === 3) {
+      if (userData.street == "" || userData.neighborhood == "" || userData.city == "") {
+        setError(true)
+      } else {
+        setStep(step + 1);
+        setError(false);
+      }
+    }
+
+    step == 4 && setStep(step + 1)
+
+
+  }
+
   const sendReport = async (report) => {
     if (!report) return Promise.reject("Miss report");
     try {
@@ -64,5 +96,6 @@ export default function useReport() {
     setError,
     isLoading,
     setIsLoading,
+    nextStep
   };
 }
