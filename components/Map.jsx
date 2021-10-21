@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import Link from "next/link";
 import { icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -32,7 +33,11 @@ const Map = ({ reports }) => {
             icon={myIcon}
             key={report._id}
           >
-            <Popup>{report.name}</Popup>
+            <Popup>
+              <Link href={`reporte/[id]}`} as={`reporte/${_id}`}>
+                <a>Ver reporte completo</a>
+              </Link>
+            </Popup>
           </Marker>
         ))}
       </MapContainer>
