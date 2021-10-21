@@ -1,5 +1,4 @@
 import Report from "../components/Report";
-import fetch from "node-fetch";
 
 // export const getServerSideProps = async () => {
 //   try {
