@@ -37,6 +37,9 @@ const Report = () => {
       const report = {
         name: userData.name,
         age: userData.age,
+        street: userData.street,
+        neighborhood: userData.neighborhood,
+        city: userData.city,
         lat: parseFloat(location[0].lat).toFixed(2),
         lng: parseFloat(location[0].lon).toFixed(2),
         information: userData.information,
@@ -55,9 +58,10 @@ const Report = () => {
           },
         ],
       };
-      console.log(location);
+      // console.log(location);
+      console.log(report);
       await sendReport(report)
-        .then((res) => console.log(res))
+        .then((res) => console.log("response", res))
         .catch((e) => console.log(e));
       setStep(1);
       setUserData({});

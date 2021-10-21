@@ -34,7 +34,7 @@ const Map = ({ reports }) => {
             key={report._id}
           >
             <Popup>
-              <Link href={`reporte/[id]}`} as={`reporte/${_id}`}>
+              <Link href={`/reporte/${report._id}`}>
                 <a>Ver reporte completo</a>
               </Link>
             </Popup>

@@ -18,15 +18,19 @@ export default function useReport() {
   const nextStep = () => {
     if (step === 1) {
       if (userData.name == "" || userData.age == "") {
-        setError(true)
+        setError(true);
       } else {
         setStep(step + 1);
         setError(false);
       }
     }
     if (step === 2) {
-      if (userData["Tocamientos"] == false && userData["Chiflidos"] == false && userData["Miradas Lacivas"] == false) {
-        setError(true)
+      if (
+        userData["Tocamientos"] == false &&
+        userData["Chiflidos"] == false &&
+        userData["Miradas Lacivas"] == false
+      ) {
+        setError(true);
       } else {
         setStep(step + 1);
         setError(false);
@@ -34,18 +38,20 @@ export default function useReport() {
     }
 
     if (step === 3) {
-      if (userData.street == "" || userData.neighborhood == "" || userData.city == "") {
-        setError(true)
+      if (
+        userData.street == "" ||
+        userData.neighborhood == "" ||
+        userData.city == ""
+      ) {
+        setError(true);
       } else {
         setStep(step + 1);
         setError(false);
       }
     }
 
-    step == 4 && setStep(step + 1)
-
-
-  }
+    step == 4 && setStep(step + 1);
+  };
 
   const sendReport = async (report) => {
     if (!report) return Promise.reject("Miss report");
@@ -53,7 +59,7 @@ export default function useReport() {
       setIsLoading(true);
       const response = await Axios.post(`${API}/report/create`, report);
       setIsLoading(false);
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -96,6 +102,6 @@ export default function useReport() {
     setError,
     isLoading,
     setIsLoading,
-    nextStep
+    nextStep,
   };
 }
