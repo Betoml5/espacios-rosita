@@ -12,14 +12,15 @@ const Map = ({ reports }) => {
   const tokenMapbox = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   const urlMap = `https://api.mapbox.com/styles/v1/betoml5/ckudbz0wj1f3s17qtv0w0cqe8/tiles/256/{z}/{x}/{y}@2x?access_token=${tokenMapbox}`;
   return (
-    <div className="flex relative">
+    <div className="flex relative lg:w-4/5 lg:mx-auto">
       <MapContainer
         center={[27.92, -101.2]}
         zoom={13}
         scrollWheelZoom={false}
         style={{
-          height: "500px",
+          height: "80vh",
           zIndex: "0",
+          borderRadius: "8px",
           width: "100%",
         }}
       >
