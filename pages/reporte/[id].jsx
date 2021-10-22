@@ -20,11 +20,11 @@ export const getServerSideProps = async ({ params }) => {
 const ReportDetail = ({ report }) => {
   console.log(report);
   return (
-    <div className="w-5/6 p-4 mx-auto shadow rounded-t-md border ">
+    <div className="w-5/6 p-4 mx-auto shadow rounded-t-md border max-w-2xl">
       <h3 className="text-xl">Reporte</h3>
       <hr className="my-2" />
       <main className="md:flex md:items-center md:justify-around">
-        <section>
+        <section className="border border-black p-4 rounded-lg my-4 max-w-xs">
           <p className="font-bold">Direccion del reporte</p>
           <p>Calle: {report.street}</p>
           <p>Colonia: {report.neighborhood}</p>
