@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "../public/assets/svg/espacios-seguros-min.svg";
-import useReport from "../hooks/useReport";
 
 const Header = () => {
   return (
