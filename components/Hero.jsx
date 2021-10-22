@@ -13,14 +13,11 @@ const Hero = () => {
             Estamos aqui para ayudarte.
           </p>
           <p className="mb-8 leading-relaxed">
-            Aqui podras realizar reportes de acosos. Los reportes saldran en un{" "}
-            <Link href="/mapa">
-              <a className="underline text-indigo-500">mapa de reportes</a>
-            </Link>
-            , tambien podras ver el detalle de cada reporte, en proximas
-            versiones agregaremos opciones para asaltos y robos para que de esta
-            manera tener reportes mas completos, todo esto con el fin de ayudar
-            a la comunidad.
+            Aqui podras realizar reportes de acosos. Los reportes saldran en un
+            mapa de reportes, tambien podras ver el detalle de cada reporte, en
+            proximas versiones agregaremos opciones para asaltos y robos para
+            que de esta manera tener reportes mas completos, todo esto con el
+            fin de ayudar a la comunidad.
           </p>
           <div className="flex justify-center">
             <Link href="/reporte">

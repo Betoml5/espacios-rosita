@@ -18,8 +18,8 @@ import Report from "../components/Report";
 //   }
 // };
 
-const Report = () => {
+const Reporte = () => {
   return <Report />;
 };
 
-export default Report;
+export default Reporte;
