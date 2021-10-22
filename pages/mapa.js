@@ -21,7 +21,7 @@ export const getServerSideProps = async () => {
   }
 };
 
-const Mapa = ({ reports }) => {
+const Map = ({ reports }) => {
   const MapReport = dynamic(() => import("../components/Map"), {
     ssr: false,
   });
@@ -29,4 +29,4 @@ const Mapa = ({ reports }) => {
   return <MapReport reports={reports} />;
 };
 
-export default Mapa;
+export default Map;

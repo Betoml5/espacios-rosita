@@ -20,13 +20,7 @@ const Header = () => {
           <Link href="/mapa">
             <a className="mr-5 hover:text-gray-900">Mapa</a>
           </Link>
-          <Link href="/">
-            <a className="mr-5 hover:text-gray-900">Contribuir</a>
-          </Link>
-          <Link href="/acerca-de">
-            <a className="mr-5 hover:text-gray-900">Acerca del proyecto</a>
-          </Link>
-          <Link href="/">
+          <Link href="/contacto">
             <a className="mr-5 hover:text-gray-900">Contacto</a>
           </Link>
         </nav>
