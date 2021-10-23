@@ -57,7 +57,9 @@ export default function useReport() {
     if (!report) return Promise.reject("Miss report");
     try {
       setIsLoading(true);
-      const response = await Axios.post(`${API}/report/create`, report);
+      const response = await Axios.post(`${API}/report/create`, report, {
+        method: "POST",
+      });
       setIsLoading(false);
       // console.log(response);
       return response.data;
