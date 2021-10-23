@@ -18,6 +18,7 @@ const Report = () => {
     nextStep,
   } = useReport();
   const [isValid, setIsValid] = useState(true);
+  const [gender, setGender] = useState("");
   const { getLocationByAddress } = useLocation();
 
   const onChange = (e) => {
@@ -42,6 +43,7 @@ const Report = () => {
         lat: parseFloat(location[0].lat).toFixed(2),
         lng: parseFloat(location[0].lon).toFixed(2),
         information: userData.information,
+        gender: gender,
         bullyTypes: [
           {
             description: "Tocamientos",
@@ -57,11 +59,11 @@ const Report = () => {
           },
         ],
       };
-
-      await sendReport(report);
-      setStep(1);
-      setUserData({});
-      router.push("/");
+      console.log(report);
+      // await sendReport(report);
+      // setStep(1);
+      // setUserData({});
+      // router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -89,6 +91,47 @@ const Report = () => {
               placeholder="Edad"
               className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
+            <section className="flex justify-between">
+              <div
+                onClick={() => {
+                  setUserData({
+                    ...userData,
+                    gender: "Hombre",
+                  });
+                }}
+                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                  userData.gender == "Hombre" && "border-green-500"
+                }`}
+              >
+                <Image src="/assets/png/man.png" width={70} height={70} />
+              </div>
+              <div
+                onClick={() => {
+                  setUserData({
+                    ...userData,
+                    gender: "Mujer",
+                  });
+                }}
+                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                  userData.gender == "Mujer" && "border-green-500"
+                }`}
+              >
+                <Image src="/assets/png/women.png" width={70} height={70} />
+              </div>
+              <div
+                onClick={() => {
+                  setUserData({
+                    ...userData,
+                    gender: "No especificado",
+                  });
+                }}
+                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                  userData.gender == "No especificado" && "border-green-500"
+                }`}
+              >
+                <p className="text-xs">Prefiero no especificar</p>
+              </div>
+            </section>
             {error && (
               <span className="text-red-500">Estos campos son necesarios</span>
             )}
