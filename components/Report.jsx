@@ -18,7 +18,7 @@ const Report = () => {
     nextStep,
   } = useReport();
   const [isValid, setIsValid] = useState(true);
-  const [gender, setGender] = useState("");
+  const [locations, setLocations] = useState([]);
   const { getLocationByAddress } = useLocation();
 
   const onChange = (e) => {
@@ -67,6 +67,13 @@ const Report = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleSearchLocation = async () => {
+    const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
+    const locationsData = await getLocationByAddress(address);
+    setLocations(locationsData);
+    console.log(locationsData);
   };
   return (
     <div className="p-4 mx-auto max-w-lg">
@@ -196,6 +203,32 @@ const Report = () => {
               placeholder="Ciudad"
               className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
+            <section className="flex flex-col-reverse w-56 text-center">
+              <button
+                type="button"
+                className="btn-primary"
+                disabled={
+                  userData.street == "" ||
+                  userData.neighborhood == "" ||
+                  userData.city == ""
+                }
+                onClick={handleSearchLocation}
+              >
+                Buscar ubicacíon
+              </button>
+              <select
+                name="adress"
+                id="adress"
+                className={`${locations.length == 0 && "hidden"}`}
+              >
+                {locations?.map((item) => (
+                  <option key={item.place_id} value={item.display_name}>
+                    {item.display_name}
+                  </option>
+                ))}
+              </select>
+            </section>
+
             {error && (
               <span className="text-red-500">Estos campos son necesarios</span>
             )}
