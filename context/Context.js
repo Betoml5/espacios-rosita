@@ -13,6 +13,7 @@ export function ContextProvider({ children }) {
     neighborhood: "",
     city: "",
     information: "",
+    gender: "",
     ["Tocamientos"]: false,
     ["Chiflidos"]: false,
     ["Miradas Lacivas"]: false
