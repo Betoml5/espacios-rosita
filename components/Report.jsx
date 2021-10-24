@@ -134,7 +134,7 @@ const Report = () => {
               </div>
             </section>
             {error && (
-              <span className="text-red-500">Estos campos son necesarios</span>
+              <p className="text-red-500 my-4">Verifica los datos ingresados</p>
             )}
           </section>
         )}
@@ -164,7 +164,7 @@ const Report = () => {
                 </label>
               ))}
               {error && (
-                <span className="mt-4 text-red-500">Selecciona al menos 1</span>
+                <p className="mt-4 text-red-500">Selecciona al menos 1</p>
               )}
             </div>
           </>
