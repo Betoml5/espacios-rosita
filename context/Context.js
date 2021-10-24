@@ -14,6 +14,7 @@ export function ContextProvider({ children }) {
     city: "",
     information: "",
     gender: "",
+    address: "",
     ["Tocamientos"]: false,
     ["Chiflidos"]: false,
     ["Miradas Lacivas"]: false

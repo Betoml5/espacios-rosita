@@ -27,12 +27,13 @@ const Report = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
+    console.log(userData);
   };
   const form = useRef(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
+      const address = userData.address;
       const location = await getLocationByAddress(address);
       const report = {
         name: userData.name,
@@ -43,7 +44,7 @@ const Report = () => {
         lat: parseFloat(location[0].lat).toFixed(2),
         lng: parseFloat(location[0].lon).toFixed(2),
         information: userData.information,
-        gender: gender,
+        gender: userData.gender,
         bullyTypes: [
           {
             description: "Tocamientos",
@@ -60,10 +61,10 @@ const Report = () => {
         ],
       };
       console.log(report);
-      // await sendReport(report);
-      // setStep(1);
-      // setUserData({});
-      // router.push("/");
+      await sendReport(report);
+      setStep(1);
+      setUserData({});
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +107,7 @@ const Report = () => {
                     gender: "Hombre",
                   });
                 }}
-                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                className={`flex cursor-pointer  items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
                   userData.gender == "Hombre" && "border-green-500"
                 }`}
               >
@@ -119,7 +120,7 @@ const Report = () => {
                     gender: "Mujer",
                   });
                 }}
-                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                className={`flex cursor-pointer items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
                   userData.gender == "Mujer" && "border-green-500"
                 }`}
               >
@@ -132,7 +133,7 @@ const Report = () => {
                     gender: "No especificado",
                   });
                 }}
-                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                className={`flex cursor-pointer items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
                   userData.gender == "No especificado" && "border-green-500"
                 }`}
               >
@@ -178,7 +179,7 @@ const Report = () => {
 
         {step === 3 && (
           <div>
-            <h4 className="text-xl mb-4">Localizacion</h4>
+            <h4 className="text-xl mb-4">Localización</h4>
             <input
               value={userData.street}
               onChange={onChange}
@@ -203,7 +204,7 @@ const Report = () => {
               placeholder="Ciudad"
               className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-            <section className="flex flex-col-reverse w-56 text-center">
+            <section className="flex flex-col-reverse w-56 text-center lg:w-full">
               <button
                 type="button"
                 className="btn-primary"
@@ -214,11 +215,12 @@ const Report = () => {
                 }
                 onClick={handleSearchLocation}
               >
-                Buscar ubicacíon
+                Buscar ubicación
               </button>
               <select
-                name="adress"
-                id="adress"
+                name="address"
+                id="address"
+                onChange={onChange}
                 className={`${locations.length == 0 && "hidden"}`}
               >
                 {locations?.map((item) => (
