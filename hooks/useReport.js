@@ -17,7 +17,7 @@ export default function useReport() {
 
   const nextStep = () => {
     if (step === 1) {
-      if (userData.name == "" || userData.age == "" || userData.gender == "") {
+      if (userData.name == "" || userData.age == "" || userData.age <= 0 || userData.age <= 10 || userData.age > 99 || userData.gender == "") {
         setError(true);
       } else {
         setStep(step + 1);
