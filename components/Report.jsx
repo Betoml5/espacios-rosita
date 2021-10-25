@@ -26,13 +26,13 @@ const Report = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
-    console.log(userData);
+    // console.log(userData);
   };
   const form = useRef(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const address = userData.address;
+      const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
       const location = await getLocationByAddress(address);
       const report = {
         name: userData.name,
@@ -60,8 +60,10 @@ const Report = () => {
         ],
       };
       console.log(report);
+      console.log(location);
+
       await sendReport(report);
-      setStep(1);
+      setStep(0);
       setUserData({});
       router.push("/");
     } catch (error) {
@@ -72,6 +74,17 @@ const Report = () => {
   return (
     <div className="p-4 mx-auto max-w-lg">
       <form className="my-9" ref={form} onSubmit={handleSubmit}>
+        {step == 0 && (
+          <section className="border border-black p-4">
+            <p className="italic">
+              Los datos que estas a punto de ingresar tiene el propósito de
+              crear espacios más seguros para toda la comunidad. Ningún dato
+              será revelado y todo es confidencial, lo único que será público
+              seran los tipos de acoso u hostigamiento como también el lugar del
+              suceso.
+            </p>
+          </section>
+        )}
         {step === 1 && (
           <section>
             <h4 className="text-xl mb-4">Datos personales</h4>
@@ -298,7 +311,7 @@ const Report = () => {
           onClick={() => {
             setUserData({});
             router.push("/");
-            setStep(1);
+            setStep(0);
           }}
         >
           Cancelar reporte

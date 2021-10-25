@@ -16,8 +16,10 @@ export default function useReport() {
   } = useContext(Context);
 
   const nextStep = () => {
+
+    step == 0 && setStep(step + 1)
     if (step === 1) {
-      if (userData.name == "" || userData.age == "" || userData.age <= 0 || userData.age <= 10 || userData.age > 99 || userData.gender == "") {
+      if (userData.name == "" || !userData.age || userData.age <= 0 || userData.age <= 10 || userData.age > 99 || userData.gender == "") {
         setError(true);
       } else {
         setStep(step + 1);
