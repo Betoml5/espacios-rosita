@@ -57,7 +57,10 @@ const Map = ({ reports }) => {
       </MapContainer>
       <div className="text-center bg-white z-50 absolute w-3/4 mx-auto left-0 right-0 self-center p-4 bottom-10 rounded-md md:w-1/4">
         <div className={`relative ${!bubble && "hidden"}`}>
-          <div className="absolute right-0" onClick={() => setBubble(false)}>
+          <div
+            className="absolute right-0 cursor-pointer"
+            onClick={() => setBubble(false)}
+          >
             X
           </div>
           <p className="mb-2">Simbología</p>
