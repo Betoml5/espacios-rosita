@@ -17,7 +17,6 @@ const Report = () => {
     sendReport,
     nextStep,
   } = useReport();
-  const [isValid, setIsValid] = useState(true);
   const { getLocationByAddress } = useLocation();
 
   const onChange = (e) => {
@@ -232,11 +231,7 @@ const Report = () => {
         {step === 5 && (
           <>
             <h4 className="text-xl mb-4">Resumen de datos</h4>
-            <div
-              className={`border border-black p-4 mb-4 rounded-xl ${
-                !isValid && "border-red-600"
-              }`}
-            >
+            <div className="border border-black p-4 mb-4 rounded-xl">
               <p>
                 Nombre: <b>{userData.name}</b>
               </p>
@@ -259,6 +254,9 @@ const Report = () => {
                 Miradas Lacivas:{" "}
                 <b>{userData["Miradas Lacivas"] ? "Cierto" : "Falso"}</b>
               </p>
+              <p className={`${!userData.information && "hidden"}`}>
+                Información extra: {userData.information}
+              </p>
             </div>
             <p className="italic">
               La ubicacion mostrada en el mapa, es una ubicacion aproximada.
@@ -266,11 +264,7 @@ const Report = () => {
               autoridades. Exhortamos a que se haga la denuncia con las
               autoridades correspondientes.
             </p>
-            {isValid === false && (
-              <span className="font-bold">
-                Todos los campos son obligatorios
-              </span>
-            )}
+
             {isLoading && <span className="my-4">Enviando reporte...</span>}
             <br />
             {step === 5 && (

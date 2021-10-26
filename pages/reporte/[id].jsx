@@ -18,7 +18,6 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const ReportDetail = ({ report }) => {
-  console.log(report);
   return (
     <div className="w-5/6 p-4 mx-auto shadow rounded-t-md border max-w-2xl">
       <h3 className="text-xl">Reporte</h3>
