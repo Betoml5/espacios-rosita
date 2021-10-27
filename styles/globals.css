@@ -2,6 +2,34 @@
 .btn-primary {
   @apply mt-4 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg;
 }
+
+.dropdown {
+  animation: fade 2s linear forwards;
+}
+
+@keyframes fade {
+  0% {
+    height: 0%;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.2;
+    height: 25%;
+  }
+  50% {
+    opacity: 0.4;
+    height: 50%;
+  }
+  75% {
+    opacity: 0.5;
+    height: 75%;
+  }
+  100% {
+    opacity: 1;
+    height: 100%;
+  }
+}
+
 @tailwind components;
 
 @tailwind utilities;
