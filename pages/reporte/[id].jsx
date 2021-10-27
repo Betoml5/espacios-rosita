@@ -26,34 +26,10 @@ const ReportDetail = ({ report }) => {
   console.log(report);
   return (
     <>
-      <div className="w-5/6 py-6 px-4 mx-auto shadow-md rounded-md max-w-2xl bg-indigo-400">
+      <div className="w-5/6 py-6 px-4 mx-auto shadow-md rounded-t-md max-w-2xl bg-indigo-400">
         <h3 className="text-xl text-white font-semibold">Reporte</h3>
-
-        {/*<hr className="my-2" />
-      <main className="md:flex md:items-center md:justify-around">
-        <section className="border border-black p-4 rounded-lg my-4 max-w-xs">
-          <p className="font-bold">Direccion del reporte</p>
-          <p>Calle: {report.street}</p>
-          <p>Colonia: {report.neighborhood}</p>
-          <p>Ciudad: {report.city}</p>
-        </section>
-        <section className="border border-black p-4 rounded-lg my-4 max-w-xs">
-          <p className="font-bold">Tipos de acoso</p>
-          {report.bullyTypes.map((item) => (
-            <p>
-              {item.description} :{" "}
-              {item.value ? (
-                <span className="text-green-600 font-bold">Cierto</span>
-              ) : (
-                <span className="text-red-600 font-bold">Falso</span>
-              )}
-            </p>
-          ))}
-        </section>
-      </main>
-      <p>ID: {report._id}</p> */}
       </div>
-      <section className="flex flex-col  w-5/6 p-6 mx-auto shadow-md rounded-md max-w-2xl -mt-3 bg-blue-400">
+      <section className="flex flex-col  w-5/6 p-6 mx-auto shadow-md  max-w-2xl  bg-blue-400">
         <button
           onClick={() =>
             setView({
@@ -80,7 +56,7 @@ const ReportDetail = ({ report }) => {
           </div>
         )}
       </section>
-      <section className="flex flex-col  w-5/6 p-6 mx-auto shadow-md rounded-md max-w-2xl -mt-5 bg-purple-300">
+      <section className="flex flex-col  w-5/6 p-6 mx-auto shadow-md  max-w-2xl  bg-purple-300">
         <button
           onClick={() =>
             setView({
@@ -107,7 +83,7 @@ const ReportDetail = ({ report }) => {
           </div>
         )}
       </section>
-      <section className="flex flex-col w-5/6 p-6 mx-auto shadow-md rounded-md max-w-2xl -mt-5 bg-blue-300">
+      <section className="flex flex-col w-5/6 p-6 mx-auto shadow-md rounded-b-md max-w-2xl  bg-blue-300">
         <button
           onClick={() =>
             setView({
@@ -115,7 +91,7 @@ const ReportDetail = ({ report }) => {
               information: !view.information,
             })
           }
-          className="text-white font-semibold text-left leading-3"
+          className="text-white font-semibold text-left "
         >
           Información extra
         </button>
