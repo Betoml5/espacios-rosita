@@ -29,7 +29,7 @@ const ReportDetail = ({ report }) => {
       <div className="w-5/6 py-6 px-4 mx-auto shadow-md rounded-t-md max-w-2xl bg-indigo-400">
         <h3 className="text-xl text-white font-semibold">Reporte</h3>
       </div>
-      <section className="flex flex-col  w-5/6 p-6 mx-auto shadow-md  max-w-2xl  bg-blue-400">
+      <section className="report-section bg-blue-400">
         <button
           onClick={() =>
             setView({
@@ -42,7 +42,7 @@ const ReportDetail = ({ report }) => {
           Lugar
         </button>
         {view.location && (
-          <div className="my-4 dropdown text-white">
+          <div className="my-4 dropdown text-white ">
             <p>
               <span className="font-semibold">Calle:</span> {report.street}
             </p>
@@ -56,7 +56,7 @@ const ReportDetail = ({ report }) => {
           </div>
         )}
       </section>
-      <section className="flex flex-col  w-5/6 p-6 mx-auto shadow-md  max-w-2xl  bg-purple-300">
+      <section className=" report-section bg-purple-300 ">
         <button
           onClick={() =>
             setView({
@@ -83,7 +83,7 @@ const ReportDetail = ({ report }) => {
           </div>
         )}
       </section>
-      <section className="flex flex-col w-5/6 p-6 mx-auto shadow-md rounded-b-md max-w-2xl  bg-blue-300">
+      <section className="report-section  bg-blue-300 ">
         <button
           onClick={() =>
             setView({

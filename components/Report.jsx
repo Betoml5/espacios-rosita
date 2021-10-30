@@ -74,13 +74,12 @@ const Report = () => {
     <div className="p-4 mx-auto max-w-lg">
       <form className="my-9" ref={form} onSubmit={handleSubmit}>
         {step == 0 && (
-          <section className="border border-black p-4">
-            <p className="italic">
+          <section className="bg-indigo-400 px-6 py-8 text-white text-lg rounded-lg shadow-lg ">
+            <p className="italic text-justify">
               Los datos que estas a punto de ingresar tiene el propósito de
-              crear espacios más seguros para toda la comunidad. Ningún dato
-              será revelado y todo es confidencial, lo único que será público
-              seran los tipos de acoso u hostigamiento como también el lugar del
-              suceso.
+              crear espacios más seguros para toda la comunidad. Los datos
+              personales son confiendiales, lo único que será público seran los
+              tipos de acoso u hostigamiento como también el lugar del suceso.
             </p>
           </section>
         )}
