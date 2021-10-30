@@ -3,9 +3,14 @@ import Image from "next/image";
 import useLocation from "../hooks/useLocation";
 import { bullyTypes } from "../mocks/reports";
 import { useRouter } from "next/dist/client/router";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { MapContainer, Popup, Marker, TileLayer } from "react-leaflet";
+import DraggableMarker from "../components/DraggableMarker";
+import "leaflet/dist/leaflet.css";
 
 const Report = () => {
+  const tokenMapbox = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+  const urlMap = `https://api.mapbox.com/styles/v1/betoml5/ckudbz0wj1f3s17qtv0w0cqe8/tiles/256/{z}/{x}/{y}@2x?access_token=${tokenMapbox}`;
   const router = useRouter();
   const {
     step,
@@ -209,6 +214,25 @@ const Report = () => {
               placeholder="Ciudad"
               className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
+
+            <MapContainer
+              center={[27.92, -101.2]}
+              zoom={13}
+              scrollWheelZoom={false}
+              style={{
+                position: "relative",
+                height: "40vh",
+                zIndex: "0",
+                borderRadius: "8px",
+                width: "100%",
+              }}
+            >
+              <TileLayer
+                attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
+                url={urlMap}
+              />
+              <DraggableMarker />
+            </MapContainer>
 
             {error && (
               <span className="text-red-500">Estos campos son necesarios</span>

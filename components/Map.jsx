@@ -39,7 +39,6 @@ const Map = ({ reports }) => {
             ? (icon = orangeCircleIcon)
             : (icon = redCircleIcon);
 
-          console.log(count);
           return (
             <Marker
               position={[report.lat, report.lng]}
