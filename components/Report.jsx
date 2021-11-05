@@ -255,7 +255,7 @@ const Report = () => {
                 Edad: <b>{userData.age}</b>
               </p>
               <p>
-                Calle: <b>{userData.address}</b>
+                Dirrección: <b>{userData.address}</b>
               </p>
               <p>{/* Colonia: <b>{userData.neighborhood}</b> */}</p>
               <p>
