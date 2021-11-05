@@ -3,7 +3,7 @@ import Image from "next/image";
 import useLocation from "../hooks/useLocation";
 import { bullyTypes } from "../mocks/reports";
 import { useRouter } from "next/dist/client/router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { MapContainer, Popup, Marker, TileLayer } from "react-leaflet";
 import DraggableMarker from "../components/DraggableMarker";
 import "leaflet/dist/leaflet.css";
@@ -23,6 +23,7 @@ const Report = () => {
     nextStep,
   } = useReport();
   const { getLocationByAddress } = useLocation();
+  const [locations, setLocations] = useState([]);
 
   const onChange = (e) => {
     setUserData({
@@ -191,30 +192,21 @@ const Report = () => {
           <div>
             <h4 className="text-xl mb-4">Localización</h4>
             <input
-              value={userData.street}
-              onChange={onChange}
+              value={userData.address}
+              disabled="true"
               type="text"
-              name="street"
-              placeholder="Calle"
+              name="address"
+              placeholder="Dirección"
               className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-            <input
-              value={userData.neighborhood}
-              onChange={onChange}
-              type="text"
-              name="neighborhood"
-              placeholder="Colonia"
-              className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
-            />
-            <input
-              value={userData.city}
-              onChange={onChange}
-              type="text"
-              name="city"
-              placeholder="Ciudad"
-              className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
-            />
-
+            {locations.length > 0 && (
+              <select name="address" id="address" className="my-4 w-full">
+                <option disabled>Selecciona dirección</option>
+                {locations?.map((item) => (
+                  <option>{item.display_name}</option>
+                ))}
+              </select>
+            )}
             <MapContainer
               center={[27.92, -101.2]}
               zoom={13}
@@ -231,7 +223,7 @@ const Report = () => {
                 attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
                 url={urlMap}
               />
-              <DraggableMarker />
+              <DraggableMarker userData={userData} setUserData={setUserData} />
             </MapContainer>
 
             {error && (
@@ -263,11 +255,9 @@ const Report = () => {
                 Edad: <b>{userData.age}</b>
               </p>
               <p>
-                Calle: <b>{userData.street}</b>
+                Calle: <b>{userData.address}</b>
               </p>
-              <p>
-                Colonia: <b>{userData.neighborhood}</b>
-              </p>
+              <p>{/* Colonia: <b>{userData.neighborhood}</b> */}</p>
               <p>
                 Tocamientos: <b>{userData.Tocamientos ? "Cierto" : "Falso"}</b>
               </p>

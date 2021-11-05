@@ -15,6 +15,8 @@ export function ContextProvider({ children }) {
     information: "",
     gender: "",
     address: "",
+    lat: 27.93,
+    lng: -101.21,
     ["Tocamientos"]: false,
     ["Chiflidos"]: false,
     ["Miradas Lacivas"]: false
