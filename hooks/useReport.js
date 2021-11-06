@@ -41,9 +41,7 @@ export default function useReport() {
 
     if (step === 3) {
       if (
-        userData.street == "" ||
-        userData.neighborhood == "" ||
-        userData.city == ""
+        userData.address == ""
       ) {
         setError(true);
       } else {
