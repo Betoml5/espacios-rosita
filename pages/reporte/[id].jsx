@@ -44,14 +44,7 @@ const ReportDetail = ({ report }) => {
         {view.location && (
           <div className="my-4 dropdown text-white ">
             <p>
-              <span className="font-semibold">Calle:</span> {report.street}
-            </p>
-            <p>
-              <span className="font-semibold">Colonia:</span>{" "}
-              {report.neighborhood}
-            </p>
-            <p>
-              <span className="font-semibold">Ciudad:</span> {report.city}
+              <span className="font-semibold">Dirección:</span> {report.address}
             </p>
           </div>
         )}
