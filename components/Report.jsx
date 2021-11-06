@@ -37,16 +37,12 @@ const Report = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
-      const location = await getLocationByAddress(address);
       const report = {
         name: userData.name,
         age: userData.age,
-        street: userData.street,
-        neighborhood: userData.neighborhood,
-        city: userData.city,
-        lat: parseFloat(location[0].lat).toFixed(2),
-        lng: parseFloat(location[0].lon).toFixed(2),
+        address: userData.address,
+        lat: parseFloat(userData.lat),
+        lng: parseFloat(userData.lng),
         information: userData.information,
         gender: userData.gender,
         bullyTypes: [
