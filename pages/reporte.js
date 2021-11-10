@@ -1,4 +1,4 @@
-import Report from "../components/Report";
+import dynamic from "next/dynamic";
 
 // export const getServerSideProps = async () => {
 //   try {
@@ -19,7 +19,11 @@ import Report from "../components/Report";
 // };
 
 const Reporte = () => {
-  return <Report />;
+  const Report = dynamic(() => import("../components/Report"), {
+    ssr: false
+  })
+
+  return <Report />
 };
 
 export default Reporte;

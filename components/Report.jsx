@@ -1,11 +1,15 @@
 import useReport from "../hooks/useReport";
 import Image from "next/image";
-import useLocation from "../hooks/useLocation";
 import { bullyTypes } from "../mocks/reports";
 import { useRouter } from "next/dist/client/router";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
+import DraggableMarker from "../components/DraggableMarker";
+import "leaflet/dist/leaflet.css";
 
 const Report = () => {
+  const tokenMapbox = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+  const urlMap = `https://api.mapbox.com/styles/v1/betoml5/ckudbz0wj1f3s17qtv0w0cqe8/tiles/256/{z}/{x}/{y}@2x?access_token=${tokenMapbox}`;
   const router = useRouter();
   const {
     step,
@@ -17,9 +21,6 @@ const Report = () => {
     sendReport,
     nextStep,
   } = useReport();
-  const [isValid, setIsValid] = useState(true);
-  const [gender, setGender] = useState("");
-  const { getLocationByAddress } = useLocation();
 
   const onChange = (e) => {
     setUserData({
@@ -32,18 +33,14 @@ const Report = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
-      const location = await getLocationByAddress(address);
       const report = {
         name: userData.name,
         age: userData.age,
-        street: userData.street,
-        neighborhood: userData.neighborhood,
-        city: userData.city,
-        lat: parseFloat(location[0].lat).toFixed(2),
-        lng: parseFloat(location[0].lon).toFixed(2),
+        address: userData.address,
+        lat: parseFloat(userData.lat),
+        lng: parseFloat(userData.lng),
         information: userData.information,
-        gender: gender,
+        gender: userData.gender,
         bullyTypes: [
           {
             description: "Tocamientos",
@@ -60,17 +57,31 @@ const Report = () => {
         ],
       };
       console.log(report);
-      // await sendReport(report);
-      // setStep(1);
-      // setUserData({});
-      // router.push("/");
+      console.log(location);
+
+      await sendReport(report);
+      setStep(0);
+      setUserData({});
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div className="p-4 mx-auto max-w-lg">
       <form className="my-9" ref={form} onSubmit={handleSubmit}>
+        {step == 0 && (
+          <section className="border border-black p-4">
+            <p className="italic">
+              Los datos que estas a punto de ingresar tiene el propósito de
+              crear espacios más seguros para toda la comunidad. Los datos
+              personales son confideniciales, lo único que será público seran
+              los tipos de acoso u hostigamiento como también el lugar del
+              suceso.
+            </p>
+          </section>
+        )}
         {step === 1 && (
           <section>
             <h4 className="text-xl mb-4">Datos personales</h4>
@@ -99,7 +110,7 @@ const Report = () => {
                     gender: "Hombre",
                   });
                 }}
-                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                className={`flex cursor-pointer  items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
                   userData.gender == "Hombre" && "border-green-500"
                 }`}
               >
@@ -112,7 +123,7 @@ const Report = () => {
                     gender: "Mujer",
                   });
                 }}
-                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                className={`flex cursor-pointer items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
                   userData.gender == "Mujer" && "border-green-500"
                 }`}
               >
@@ -125,7 +136,7 @@ const Report = () => {
                     gender: "No especificado",
                   });
                 }}
-                className={`flex items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
+                className={`flex cursor-pointer items-center justify-center text-center border border-black p-4 w-1/4 rounded-xl ${
                   userData.gender == "No especificado" && "border-green-500"
                 }`}
               >
@@ -133,7 +144,7 @@ const Report = () => {
               </div>
             </section>
             {error && (
-              <span className="text-red-500">Estos campos son necesarios</span>
+              <p className="text-red-500 my-4">Verifica los datos ingresados</p>
             )}
           </section>
         )}
@@ -163,7 +174,7 @@ const Report = () => {
                 </label>
               ))}
               {error && (
-                <span className="mt-4 text-red-500">Selecciona al menos 1</span>
+                <p className="mt-4 text-red-500">Selecciona al menos 1</p>
               )}
             </div>
           </>
@@ -171,31 +182,37 @@ const Report = () => {
 
         {step === 3 && (
           <div>
-            <h4 className="text-xl mb-4">Localizacion</h4>
+            <h4 className="text-xl mb-4">Localización</h4>
+            <p className="mb-2">
+              Utiliza el <b>marcador verde</b> para seleccionar la ubicación
+            </p>
             <input
-              value={userData.street}
-              onChange={onChange}
+              value={userData.address}
+              disabled="true"
               type="text"
-              name="street"
-              placeholder="Calle"
+              name="address"
+              placeholder="Dirección"
               className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-            <input
-              value={userData.neighborhood}
-              onChange={onChange}
-              type="text"
-              name="neighborhood"
-              placeholder="Colonia"
-              className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
-            />
-            <input
-              value={userData.city}
-              onChange={onChange}
-              type="text"
-              name="city"
-              placeholder="Ciudad"
-              className="px-3 py-3 mb-4 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
-            />
+            <MapContainer
+              center={[27.92, -101.2]}
+              zoom={13}
+              scrollWheelZoom={false}
+              style={{
+                position: "relative",
+                height: "40vh",
+                zIndex: "0",
+                borderRadius: "8px",
+                width: "100%",
+              }}
+            >
+              <TileLayer
+                attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
+                url={urlMap}
+              />
+              <DraggableMarker userData={userData} setUserData={setUserData} />
+            </MapContainer>
+
             {error && (
               <span className="text-red-500">Estos campos son necesarios</span>
             )}
@@ -217,11 +234,7 @@ const Report = () => {
         {step === 5 && (
           <>
             <h4 className="text-xl mb-4">Resumen de datos</h4>
-            <div
-              className={`border border-black p-4 mb-4 rounded-xl ${
-                !isValid && "border-red-600"
-              }`}
-            >
+            <div className="border border-black p-4 mb-4 rounded-xl">
               <p>
                 Nombre: <b>{userData.name}</b>
               </p>
@@ -229,11 +242,9 @@ const Report = () => {
                 Edad: <b>{userData.age}</b>
               </p>
               <p>
-                Calle: <b>{userData.street}</b>
+                Dirrección: <b>{userData.address}</b>
               </p>
-              <p>
-                Colonia: <b>{userData.neighborhood}</b>
-              </p>
+              <p>{/* Colonia: <b>{userData.neighborhood}</b> */}</p>
               <p>
                 Tocamientos: <b>{userData.Tocamientos ? "Cierto" : "Falso"}</b>
               </p>
@@ -244,6 +255,9 @@ const Report = () => {
                 Miradas Lacivas:{" "}
                 <b>{userData["Miradas Lacivas"] ? "Cierto" : "Falso"}</b>
               </p>
+              <p className={`${!userData.information && "hidden"}`}>
+                Información extra: {userData.information}
+              </p>
             </div>
             <p className="italic">
               La ubicacion mostrada en el mapa, es una ubicacion aproximada.
@@ -251,11 +265,7 @@ const Report = () => {
               autoridades. Exhortamos a que se haga la denuncia con las
               autoridades correspondientes.
             </p>
-            {isValid === false && (
-              <span className="font-bold">
-                Todos los campos son obligatorios
-              </span>
-            )}
+
             {isLoading && <span className="my-4">Enviando reporte...</span>}
             <br />
             {step === 5 && (
@@ -296,7 +306,7 @@ const Report = () => {
           onClick={() => {
             setUserData({});
             router.push("/");
-            setStep(1);
+            setStep(0);
           }}
         >
           Cancelar reporte

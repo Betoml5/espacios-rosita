@@ -5,7 +5,7 @@ const Context = React.createContext({});
 export function ContextProvider({ children }) {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [userData, setUserData] = useState({
     name: "",
     age: "",
@@ -14,6 +14,9 @@ export function ContextProvider({ children }) {
     city: "",
     information: "",
     gender: "",
+    address: "",
+    lat: 27.93,
+    lng: -101.21,
     ["Tocamientos"]: false,
     ["Chiflidos"]: false,
     ["Miradas Lacivas"]: false

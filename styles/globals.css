@@ -1,3 +1,47 @@
 @tailwind base;
+.btn-primary {
+  @apply mt-4 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg;
+}
+
+.report-section {
+  @apply flex flex-col  w-5/6 p-6 mx-auto   max-w-2xl rounded-md -mt-4 move-left;
+}
+
+.move-left {
+  transition: all ease 100ms;
+}
+
+.move-left:hover {
+  margin-top: -8px;
+}
+
+.dropdown {
+  animation: fade 1s linear forwards;
+}
+
+@keyframes fade {
+  0% {
+    height: 0%;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.2;
+    height: 25%;
+  }
+  50% {
+    opacity: 0.4;
+    height: 50%;
+  }
+  75% {
+    opacity: 0.5;
+    height: 75%;
+  }
+  100% {
+    opacity: 1;
+    height: 100%;
+  }
+}
+
 @tailwind components;
+
 @tailwind utilities;
