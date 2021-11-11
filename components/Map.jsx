@@ -3,12 +3,22 @@ import Image from "next/image";
 import Link from "next/link";
 import "leaflet/dist/leaflet.css";
 import { redCircleIcon, orangeCircleIcon, yellowCircleIcon } from "../icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 const Map = ({ reports }) => {
   const [bubble, setBubble] = useState(true);
+  const mark = useRef();
+  console.log(mark);
 
   const tokenMapbox = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   const urlMap = `https://api.mapbox.com/styles/v1/betoml5/ckudbz0wj1f3s17qtv0w0cqe8/tiles/256/{z}/{x}/{y}@2x?access_token=${tokenMapbox}`;
+  const observer = new IntersectionObserver((entries, self) => {
+    entries.forEach((entry) => {
+      if (entry.intersectionRatio > 0) {
+        console.log("in the view", entry.target.innerHTML);
+      }
+    });
+  });
+
   return (
     <div className="flex relative lg:w-4/5 lg:mx-auto">
       <MapContainer
@@ -44,6 +54,7 @@ const Map = ({ reports }) => {
               position={[report.lat, report.lng]}
               icon={icon}
               key={report._id}
+              ref={mark}
             >
               <Popup>
                 <Link href={`/reporte/${report._id}`}>
