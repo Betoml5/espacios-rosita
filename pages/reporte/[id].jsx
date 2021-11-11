@@ -23,7 +23,7 @@ const ReportDetail = ({ report }) => {
     information: false,
     bullyTypes: false,
   });
-  console.log(report);
+
   return (
     <>
       <div className="w-5/6 py-6 px-4 mx-auto shadow-md rounded-t-md max-w-2xl bg-indigo-400">
