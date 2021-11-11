@@ -23,7 +23,7 @@ const ReportDetail = ({ report }) => {
     information: false,
     bullyTypes: false,
   });
-  console.log(report);
+
   return (
     <>
       <div className="w-5/6 py-6 px-4 mx-auto shadow-md rounded-t-md max-w-2xl bg-indigo-400">
@@ -44,14 +44,7 @@ const ReportDetail = ({ report }) => {
         {view.location && (
           <div className="my-4 dropdown text-white ">
             <p>
-              <span className="font-semibold">Calle:</span> {report.street}
-            </p>
-            <p>
-              <span className="font-semibold">Colonia:</span>{" "}
-              {report.neighborhood}
-            </p>
-            <p>
-              <span className="font-semibold">Ciudad:</span> {report.city}
+              <span className="font-semibold">Dirección:</span> {report.address}
             </p>
           </div>
         )}

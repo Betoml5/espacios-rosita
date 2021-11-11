@@ -1,10 +1,9 @@
 import useReport from "../hooks/useReport";
 import Image from "next/image";
-import useLocation from "../hooks/useLocation";
 import { bullyTypes } from "../mocks/reports";
 import { useRouter } from "next/dist/client/router";
-import { useRef, useState } from "react";
-import { MapContainer, Popup, Marker, TileLayer } from "react-leaflet";
+import { useRef } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
 import DraggableMarker from "../components/DraggableMarker";
 import "leaflet/dist/leaflet.css";
 
@@ -22,8 +21,6 @@ const Report = () => {
     sendReport,
     nextStep,
   } = useReport();
-  const { getLocationByAddress } = useLocation();
-  const [locations, setLocations] = useState([]);
 
   const onChange = (e) => {
     setUserData({
@@ -31,22 +28,17 @@ const Report = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
-    // console.log(userData);
   };
   const form = useRef(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const address = `${userData.street} ${userData.neighborhood} ${userData.city}`;
-      const location = await getLocationByAddress(address);
       const report = {
         name: userData.name,
         age: userData.age,
-        street: userData.street,
-        neighborhood: userData.neighborhood,
-        city: userData.city,
-        lat: parseFloat(location[0].lat).toFixed(2),
-        lng: parseFloat(location[0].lon).toFixed(2),
+        address: userData.address,
+        lat: parseFloat(userData.lat),
+        lng: parseFloat(userData.lng),
         information: userData.information,
         gender: userData.gender,
         bullyTypes: [
@@ -191,6 +183,9 @@ const Report = () => {
         {step === 3 && (
           <div>
             <h4 className="text-xl mb-4">Localización</h4>
+            <p className="mb-2">
+              Utiliza el <b>marcador verde</b> para seleccionar la ubicación
+            </p>
             <input
               value={userData.address}
               disabled="true"
@@ -199,14 +194,6 @@ const Report = () => {
               placeholder="Dirección"
               className="px-3 py-3 mb-2 placeholder-gray-400 text-gray-600 relative bg-white  rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring w-full"
             />
-            {locations.length > 0 && (
-              <select name="address" id="address" className="my-4 w-full">
-                <option disabled>Selecciona dirección</option>
-                {locations?.map((item) => (
-                  <option>{item.display_name}</option>
-                ))}
-              </select>
-            )}
             <MapContainer
               center={[27.92, -101.2]}
               zoom={13}

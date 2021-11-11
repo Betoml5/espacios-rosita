@@ -1,10 +1,10 @@
-import { useCallback, useContext, useMemo, useRef, useState } from "react";
-import { Marker, Popup } from "react-leaflet";
+import { useMemo, useRef, useState } from "react";
+import { Marker } from "react-leaflet";
 import { greenCircleIcon } from "../icons";
 import useLocation from "../hooks/useLocation";
 function DraggableMarker({ userData, setUserData }) {
   const { getLocationByLatLng } = useLocation();
-  const [position, setPosition] = useState([userData.lat, userData.lng]);
+  const [position, setPosition] = useState([userData?.lat, userData?.lng]);
   const markerRef = useRef(null);
   const eventHandlers = useMemo(
     () => ({
