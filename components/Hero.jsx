@@ -8,7 +8,7 @@ const Hero = () => {
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6  md:mb-0">
           <Image src={Logo} width={500} height={500} className="rounded-md" />
         </div>
-        <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+        <div className="lg:flex-grow md:w-1/2 lg:pl-6 md:pl-6 flex flex-col md:items-start md:text-left items-center text-center">
           <p className="font-bold text-2xl text-black my-4 md:text-4xl">
             Estamos aqui para ayudarte.
           </p>
