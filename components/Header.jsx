@@ -4,7 +4,7 @@ import Logo from "../public/assets/svg/espacios-seguros-min.svg";
 
 const Header = () => {
   return (
-    <header className="text-gray-600 body-font">
+    <header className=" text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <Link href="/">
           <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
@@ -21,6 +21,9 @@ const Header = () => {
           </Link>
           <Link href="/contacto">
             <a className="mr-5 hover:text-gray-900">Contacto</a>
+          </Link>
+          <Link href="/acerca-de">
+            <a className="mr-5 hover:text-gray-900">Acerca del proyecto</a>
           </Link>
         </nav>
       </div>
