@@ -4,7 +4,7 @@ export const getServerSideProps = async () => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/report/all`);
     const reports = await response.json();
-    // console.log("reports", reports);
+
     if (!reports) {
       return {
         notFound: true,
