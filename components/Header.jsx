@@ -19,6 +19,9 @@ const Header = () => {
           <Link href="/mapa">
             <a className="mr-5 hover:text-gray-900">Mapa</a>
           </Link>
+          <Link href="/simbologia">
+            <a className="mr-5 hover:text-gray-900">Simbologia</a>
+          </Link>
           <Link href="/contacto">
             <a className="mr-5 hover:text-gray-900">Contacto</a>
           </Link>
