@@ -28,6 +28,8 @@ const Report = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
+
+    console.log(userData);
   };
   const form = useRef(null);
   const handleSubmit = async (e) => {
@@ -53,6 +55,14 @@ const Report = () => {
           {
             description: "Chiflidos",
             value: userData["Chiflidos"],
+          },
+          {
+            description: "Abuso sexual",
+            value: userData["Abuso sexual"],
+          },
+          {
+            description: "Secuestro",
+            value: userData["Secuestro"],
           },
         ],
       };
@@ -152,12 +162,12 @@ const Report = () => {
         {step === 2 && (
           <>
             <h4 className="text-xl mb-4">Tipos de acosos</h4>
-            <div className="flex flex-wrap justify-between text-center">
+            <div className="flex flex-wrap justify-between text-center gap-2">
               {bullyTypes.bully_types.map((item) => (
                 <label
                   htmlFor={item.type}
                   key={item.type}
-                  className={`flex flex-col items-center justify-center w-1/4  p-4 border border-black rounded-lg cursor-pointer ${
+                  className={`flex flex-col items-center justify-center min-w-full w-1/6  p-4 border border-black rounded-lg cursor-pointer md:min-w-0 ${
                     userData[item.type] && "border-2 border-green-500 "
                   }`}
                 >
@@ -170,7 +180,7 @@ const Report = () => {
                   />
 
                   <p className="text-xs">{item.type}</p>
-                  <Image src={item.image} alt="image" width={30} height={30} />
+                  <Image src={item.image} alt="image" width={35} height={35} />
                 </label>
               ))}
               {error && (
@@ -254,6 +264,13 @@ const Report = () => {
               <p>
                 Miradas Lacivas:{" "}
                 <b>{userData["Miradas Lacivas"] ? "Cierto" : "Falso"}</b>
+              </p>
+              <p>
+                Abuso Sexual:{" "}
+                <b>{userData["Abuso sexual"] ? "Cierto" : "Falso"}</b>
+              </p>
+              <p>
+                Secuestro: <b>{userData["Secuestro"] ? "Cierto" : "Falso"}</b>
               </p>
               <p className={`${!userData.information && "hidden"}`}>
                 Información extra: {userData.information}

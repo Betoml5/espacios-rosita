@@ -30,7 +30,9 @@ export default function useReport() {
       if (
         userData["Tocamientos"] == false &&
         userData["Chiflidos"] == false &&
-        userData["Miradas Lacivas"] == false
+        userData["Miradas Lacivas"] == false &&
+        userData["Abuso sexual"] == false &&
+        userData["Secuestro"] == false
       ) {
         setError(true);
       } else {

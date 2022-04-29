@@ -19,7 +19,9 @@ export function ContextProvider({ children }) {
     lng: -101.21,
     ["Tocamientos"]: false,
     ["Chiflidos"]: false,
-    ["Miradas Lacivas"]: false
+    ["Miradas Lacivas"]: false,
+    ["Abuso sexual"]: false,
+    ["Secuestro"]: false
   });
 
   return (
