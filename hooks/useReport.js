@@ -16,10 +16,16 @@ export default function useReport() {
   } = useContext(Context);
 
   const nextStep = () => {
-
-    step == 0 && setStep(step + 1)
+    step == 0 && setStep(step + 1);
     if (step === 1) {
-      if (userData.name == "" || !userData.age || userData.age <= 0 || userData.age <= 10 || userData.age > 99 || userData.gender == "") {
+      if (
+        userData.name == "" ||
+        !userData.age ||
+        userData.age <= 0 ||
+        userData.age <= 10 ||
+        userData.age > 99 ||
+        userData.gender == ""
+      ) {
         setError(true);
       } else {
         setStep(step + 1);
@@ -42,9 +48,7 @@ export default function useReport() {
     }
 
     if (step === 3) {
-      if (
-        userData.address == ""
-      ) {
+      if (userData.address == "") {
         setError(true);
       } else {
         setStep(step + 1);
@@ -63,10 +67,8 @@ export default function useReport() {
         method: "POST",
       });
       setIsLoading(false);
-      // console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
       return error;
     }
   };

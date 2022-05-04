@@ -28,8 +28,6 @@ const Report = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
-
-    console.log(userData);
   };
   const form = useRef(null);
   const handleSubmit = async (e) => {
@@ -66,15 +64,13 @@ const Report = () => {
           },
         ],
       };
-      console.log(report);
-      console.log(location);
 
       await sendReport(report);
       setStep(0);
       setUserData({});
       router.push("/");
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 

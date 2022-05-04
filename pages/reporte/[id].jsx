@@ -13,7 +13,7 @@ export const getServerSideProps = async ({ params }) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
