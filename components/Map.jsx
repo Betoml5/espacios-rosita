@@ -28,6 +28,7 @@ const Map = ({ reports }) => {
           url={urlMap}
         />
         {reports?.body?.map((report) => {
+          //Esto es para saber cuantos tipos de acoso tiene un reporte
           const count = report.bullyTypes.filter(
             (item) => item.value == true
           ).length;
