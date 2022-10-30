@@ -13,7 +13,7 @@ export const getServerSideProps = async ({ params }) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -48,7 +48,7 @@ const ReportDetail = ({ report }) => {
             ))}
           </p>
         </section>
-        <section className="">
+        <section>
           <p>
             <span className="font-semibold">Informacion extra:</span>{" "}
             {report.information ? (
